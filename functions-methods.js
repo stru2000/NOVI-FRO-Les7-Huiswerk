@@ -10,6 +10,12 @@
 // getEmailDomain("a.wiersma@outlook.com") geeft outlook.com
 
 
+function getEmailDomain(email) {
+    return email.substring(email.indexOf("@")+1);           //gewoon om te testen of dit ook werkt
+}
+console.log(getEmailDomain("n.eeken@novi-education"));
+console.log(getEmailDomain("t.mellink@novi.nl"));
+console.log(getEmailDomain("a.wiersma@outlook.com"));
 
 
 /* Opdracht  2 */
@@ -20,7 +26,26 @@
 // typeOfEmail("novi.nlaapjesk@outlook.com") geeft geeft "Extern" <-- deze moet het ook doen!
 // typeOfEmail("a.wiersma@outlook.com") geeft "Extern"
 
-
+function typeOfEmail(email) {
+    const domain = email.split("@")[1];
+    let role = "";
+    switch (domain) {
+        case "novi-education.nl":
+            role = "Student";
+            break;
+        case "novi.nl":
+            role = "Medwerker";
+            break;
+        default:
+            role = "Extern";
+    }
+    return role;
+}
+console.log(typeOfEmail("s.test@gmail.com"));
+console.log(typeOfEmail("n.eeken@novi-education.nl"));
+console.log(typeOfEmail("t.mellink@novi.nl"));
+console.log(typeOfEmail("novi.nlaapjesk@outlook.com"));
+console.log(typeOfEmail("a.wiersma@outlook.com"));
 
 /* Opdracht  3 */
 // Schrijf een functie genaamd checkEmailValidity, die een emailadres verwacht en checkt of het emailadres valide is. De functie returned true of false, afhankelijk van de uitkomst.
@@ -34,3 +59,40 @@
 // checkEmailValidity("n.eekenanovi.nl") geeft false - want geen @
 // checkEmailValidity("n.eeken@novinl.") geeft false - want de punt mag niet als laatst
 // checkEmailValidity("tessmellink@novi,nl") geeft false - want er staat een komma in
+
+// TEST
+// const email = "n.eeken@novi.nl";
+// const includesAt = email.includes ("@");
+// console.log(includesAt);
+// const doesNotIncludeComma = !email.includes(",");
+// console.log(doesNotIncludeComma);
+// const lastChar = email.slice(-1);
+// console.log(lastChar);
+// const lastCharIsNotDot = email.slice(-1) !== ".";
+// console.log(lastCharIsNotDot);
+
+
+function checkEmailValidity(email) {
+    const includesAt = email.includes ("@");
+    const doesNotIncludeComma = !email.includes(",");
+    const lastCharIsNotDot = email.slice(-1) !== ".";
+    const isValid  = includesAt && doesNotIncludeComma && lastCharIsNotDot;
+
+    let reason = "";
+    if (!includesAt) {
+        reason = "want geen @"
+    } else if (!doesNotIncludeComma) {
+        reason = "want er staat een komma in"
+    } else if (!lastCharIsNotDot) {
+        reason = "want de punt mag niet als laatst"
+    } else {
+        reason = "want @ en punt op de juiste plek"
+    }
+    return `geeft ${isValid} - ${reason}`;
+}
+
+console.log(checkEmailValidity("n.eeken@novi.nl"));
+console.log(checkEmailValidity("tessmellink@novi.nl"));
+console.log(checkEmailValidity("n.eekenanovi.nl"));
+console.log(checkEmailValidity("n.eeken@novinl."));
+console.log(checkEmailValidity("tessmellink@novi,nl"));
